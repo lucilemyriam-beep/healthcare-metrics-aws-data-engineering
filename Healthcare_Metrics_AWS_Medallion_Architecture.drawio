@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram name="Healthcare AWS Medallion Architecture" id="healthcare-medallion">
+    <mxGraphModel dx="1514" dy="2570" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RGL6sBAbWhCFtr6wJqiF-1" edge="1" parent="1" source="title" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="795" y="-139.99999999999977" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#123b70;strokeColor=#123b70;fontColor=#ffffff;fontSize=23;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;Healthcare Metrics Project — AWS Medallion Architecture&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Revised design for SME review · Glue ingestion · Glue Workflows · S3 Bronze / Silver / Gold&lt;/font&gt;" vertex="1">
+          <mxGeometry height="86" width="1470" x="60" y="-130" as="geometry" />
+        </mxCell>
+        <mxCell id="source" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9f4ff;strokeColor=#2d77bb;fontColor=#14243a;fontSize=16;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;GOOGLE DRIVE&lt;/b&gt;&lt;br&gt;Master PBJ staffing CSV&lt;br&gt;+ supporting healthcare CSVs&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;External source · Google Drive API&lt;/font&gt;" vertex="1">
+          <mxGeometry height="126" width="245" x="30" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="cloud" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#8da8c4;fontColor=#14243a;fontSize=17;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;dashed=1;dashPattern=8 5;verticalAlign=top;align=left;spacingTop=12;spacingLeft=16;" value="AWS CLOUD — DATA PROCESSING AND STORAGE" vertex="1">
+          <mxGeometry height="790" width="1197" x="310" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="workflow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1eaff;strokeColor=#8754bd;fontColor=#14243a;fontSize=16;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AWS GLUE WORKFLOW + TRIGGERS&lt;/b&gt;&lt;br&gt;Scheduled runs · Conditional dependencies&lt;br&gt;Ingestion → Silver → Gold" vertex="1">
+          <mxGeometry height="102" width="560" x="460" y="157" as="geometry" />
+        </mxCell>
+        <mxCell id="secrets" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0ef;strokeColor=#d45d59;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AWS SECRETS MANAGER&lt;/b&gt;&lt;br&gt;Google Drive API credentials" vertex="1">
+          <mxGeometry height="76" width="350" x="1115" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="checkpoint" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0efff;strokeColor=#7869cf;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AMAZON DYNAMODB&lt;/b&gt;&lt;br&gt;File ID / version / successful checkpoint" vertex="1">
+          <mxGeometry height="76" width="350" x="1115" y="264" as="geometry" />
+        </mxCell>
+        <mxCell id="ingest" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3edff;strokeColor=#8656bb;fontColor=#14243a;fontSize=15;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;1 · AWS GLUE INGESTION JOB&lt;/b&gt;&lt;br&gt;Authenticate to Drive API&lt;br&gt;Detect new or modified files&lt;br&gt;Copy original CSV versions" vertex="1">
+          <mxGeometry height="124" width="350" x="385" y="367" as="geometry" />
+        </mxCell>
+        <mxCell id="silverjob" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3edff;strokeColor=#8656bb;fontColor=#14243a;fontSize=15;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;2 · AWS GLUE SILVER JOB&lt;/b&gt;&lt;br&gt;Validate schema and dates&lt;br&gt;Preserve provider ID leading zeros&lt;br&gt;Flag missing values and anomalies" vertex="1">
+          <mxGeometry height="124" width="350" x="785" y="367" as="geometry" />
+        </mxCell>
+        <mxCell id="goldjob" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3edff;strokeColor=#8656bb;fontColor=#14243a;fontSize=15;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;3 · AWS GLUE GOLD JOB&lt;/b&gt;&lt;br&gt;Build metrics-ready tables&lt;br&gt;Join at correct dataset grain&lt;br&gt;Aggregate staffing metrics" vertex="1">
+          <mxGeometry height="124" width="305" x="1185" y="367" as="geometry" />
+        </mxCell>
+        <mxCell id="bronze" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0df;strokeColor=#bb7932;fontColor=#14243a;fontSize=17;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;BRONZE · AMAZON S3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot;&gt;Raw healthcare CSVs&lt;/font&gt;&lt;br&gt;Original files and versions&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;s3://&amp;lt;bucket&amp;gt;/bronze/&lt;/font&gt;" vertex="1">
+          <mxGeometry height="135" width="350" x="385" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="silver" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#edf1f5;strokeColor=#8796a8;fontColor=#14243a;fontSize=17;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;SILVER · AMAZON S3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot;&gt;Cleaned, validated datasets&lt;/font&gt;&lt;br&gt;Typed dates · provider IDs · quality flags&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;s3://&amp;lt;bucket&amp;gt;/silver/&lt;/font&gt;" vertex="1">
+          <mxGeometry height="135" width="350" x="785" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="gold" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4cf;strokeColor=#d5a52f;fontColor=#14243a;fontSize=17;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;GOLD · AMAZON S3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot;&gt;Analytics-ready healthcare metrics&lt;/font&gt;&lt;br&gt;Curated tables for reporting&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;s3://&amp;lt;bucket&amp;gt;/gold/&lt;/font&gt;" vertex="1">
+          <mxGeometry height="135" width="305" x="1185" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="catalog" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9f4ff;strokeColor=#2d77bb;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AWS GLUE DATA CATALOG&lt;/b&gt;&lt;br&gt;Schema + table metadata" vertex="1">
+          <mxGeometry height="78" width="285" x="590" y="762" as="geometry" />
+        </mxCell>
+        <mxCell id="athena" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9f4ff;strokeColor=#2d77bb;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AMAZON ATHENA&lt;/b&gt;&lt;br&gt;SQL on Gold datasets in S3" vertex="1">
+          <mxGeometry height="78" width="285" x="945" y="762" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7f7f1;strokeColor=#4e9c7c;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;AMAZON CLOUDWATCH&lt;/b&gt;&lt;br&gt;Glue logs · errors · alerts" vertex="1">
+          <mxGeometry height="78" width="215" x="1275" y="762" as="geometry" />
+        </mxCell>
+        <mxCell id="dashboard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce8f5;strokeColor=#bf5b9b;fontColor=#14243a;fontSize=17;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;LOCAL STREAMLIT DASHBOARD&lt;/b&gt;&lt;br&gt;Run locally · capture screenshots · upload to GitHub&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Not hosted on AWS&lt;/font&gt;" vertex="1">
+          <mxGeometry height="93" width="790" x="540" y="961" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="source" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2876b7;strokeWidth=2;" target="ingest" value="Google Drive API">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="workflow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#8656bb;strokeWidth=2;" target="ingest" value="start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="workflow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#8656bb;strokeWidth=2;" target="silverjob" value="after success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="workflow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#8656bb;strokeWidth=2;" target="goldjob" value="after success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="secrets" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#c45858;strokeWidth=2;dashed=1;dashPattern=5 4;" target="ingest" value="credentials">
+          <mxGeometry relative="1" x="-0.0056" y="22" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="checkpoint" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#7464c6;strokeWidth=2;dashed=1;dashPattern=5 4;" target="ingest" value="incremental state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ingest" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b87934;strokeWidth=2;" target="bronze" value="raw versions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="bronze" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b87934;strokeWidth=2;" target="silverjob" value="read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="silverjob" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#8796a8;strokeWidth=2;" target="silver" value="write">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="silver" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#8796a8;strokeWidth=2;" target="goldjob" value="read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="goldjob" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#c49c2d;strokeWidth=2;" target="gold" value="write">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="gold" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#4385b5;strokeWidth=2;dashed=1;dashPattern=5 4;" target="catalog" value="register tables">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="catalog" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#4385b5;strokeWidth=2;" target="athena" value="metadata">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="gold" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#c49c2d;strokeWidth=2;" target="athena" value="query data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="athena" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a4508d;strokeWidth=2;" target="dashboard" value="query results">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="workflow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#4e9c7c;strokeWidth=2;dashed=1;dashPattern=5 4;" target="monitor" value="execution logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff6df;strokeColor=#d4ac49;fontColor=#14243a;fontSize=14;fontFamily=Arial;align=center;verticalAlign=middle;spacing=8;strokeWidth=1.7;" value="&lt;b&gt;DESIGN STATUS:&lt;/b&gt; Revised proposal based on SME feedback · Written approval pending before AWS pipeline implementation" vertex="1">
+          <mxGeometry height="38" width="1470" x="60" y="1070" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
